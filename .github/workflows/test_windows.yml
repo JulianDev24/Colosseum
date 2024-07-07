@@ -20,9 +20,3 @@ jobs:
       - name: Build AirLib
         shell: cmd
         run: build.cmd
-
-      - name: Unity build
-        shell: cmd
-        run: |
-          cd Unity
-          build.cmd
