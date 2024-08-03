@@ -37,38 +37,3 @@ jobs:
           source /opt/ros/*/setup.bash
           cd ros2
           colcon build --cmake-args -DCMAKE_C_COMPILER=gcc-8 --cmake-args -DCMAKE_CXX_COMPILER=g++-8
-      
-      - name: Install Gazebo
-        run: |
-          # Install Gazebo using the provided script
-          curl -sSL http://get.gazebosim.org | sh
-
-      - name: Build GazeboDrone
-        run: |
-          # Update the package list and install the necessary packages
-          sudo apt-get update -qq
-          sudo apt install --reinstall gcc-12
-
-          sudo ln -s -f /usr/bin/gcc-12 /usr/bin/gcc
-          
-          # Set the environment variables for the compilers
-          export CC=gcc-12
-          export CXX=g++-12
-          
-          # Clean previous builds and build the project with the specified compilers
-          ./clean.sh && ./build.sh --gcc
-          
-          # Create a build directory, configure the project with CMake, and compile it
-          cd GazeboDrone
-          mkdir build && cd build
-          cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} ..
-          make
-          
-      - name: Build GazeboDrone
-        run: |
-          sudo apt-get install -qq libgazebo9-dev gcc-12 g++-12
-          ./clean.sh && ./build.sh --gcc
-          cd GazeboDrone
-          mkdir build && cd build
-          cmake -DCMAKE_C_COMPILER=gcc-12 -DCMAKE_CXX_COMPILER=g++-12 ..
-          make
